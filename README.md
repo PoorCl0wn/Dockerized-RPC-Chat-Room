@@ -1,20 +1,98 @@
 # Dockerized RPC Chatroom (Go)
 
-A simple Go RPC chatroom packaged in a Docker container. Run the server locally, test it with the Go client, and pull the Docker image from Docker Hub.
+This assignment extends the simple **Go RPC chatroom** by packaging the server inside a **Docker container**, running it locally, testing it with the Go client, and finally publishing the Docker image on **Docker Hub**.
 
-## Docker Hub Image
-[https://hub.docker.com/r/poorclown/rpc-chat-server](https://hub.docker.com/r/poorclown/rpc-chat-server)
+> **Docker Hub Image:**  
+> `https://hub.docker.com/r/moelgazar77/rpc-chat-server`
 
-## How to Run
+---
 
-### Run the Server (Docker)
+## Features
+
+### ✅ RPC Server
+- Stores all chat messages **in-memory**.
+- Exposes RPC methods:
+  - `AddMessage` — adds a new message  
+  - `GetHistory` — returns the full chat history
+- Runs inside a **Docker container** on port `1234`.
+
+### ✅ RPC Client
+- Connects to the server using port `localhost:1234`
+- Sends user messages
+- Receives and prints the entire chat history
+- Keeps running until terminated manually
+
+---
+
+## How to Run (Dockerized Server + Local Client)
+
+### 1) Run the Server (Docker)
+
 ```bash
-docker pull poorclown/rpc-chat-server:v1
-docker run --rm -p 1234:1234 poorclown/rpc-chat-server:v1
+docker pull moelgazar77/rpc-chat-server:latest
+docker run --rm -p 1234:1234 moelgazar77/rpc-chat-server:latest
 ```
 
-### Run the Client (Go)
+The server listens on:
+
+```
+localhost:1234
+```
+
+---
+
+### 2) Run the Client (Go)
+
+Open another terminal in the project folder:
+
 ```bash
 go run client.go
 ```
-The client connects to the server at `localhost:1234`.
+
+Example interaction:
+
+```
+Enter message: Hello
+--- Chat History ---
+You: Hello
+--------------------
+```
+
+---
+
+## Dockerfile (Used for This Assignment)
+
+```dockerfile
+FROM golang:1.22-alpine
+WORKDIR /app
+COPY server.go .
+RUN go build -o server server.go
+ENV CHAT_PORT=1234
+EXPOSE 1234
+CMD ["./server"]
+```
+
+---
+
+## Image Build and Publish
+
+### 1) Build the image
+```bash
+docker build -t moelgazar77/rpc-chat-server:latest .
+```
+
+### 2) Login to Docker Hub  
+
+```bash
+docker login
+```
+
+### 3) Push the image
+```bash
+docker push moelgazar77/rpc-chat-server:latest
+```
+
+---
+
+
+
