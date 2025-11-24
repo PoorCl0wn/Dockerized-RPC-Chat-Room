@@ -3,7 +3,7 @@
 This assignment extends the simple **Go RPC chatroom** by packaging the server inside a **Docker container**, running it locally, testing it with the Go client, and finally publishing the Docker image on **Docker Hub**.
 
 > **Docker Hub Image:**  
-> `https://hub.docker.com/r/moelgazar77/rpc-chat-server`
+> `https://hub.docker.com/r/poorclown/rpc-chat-server`
 
 ---
 
@@ -29,8 +29,8 @@ This assignment extends the simple **Go RPC chatroom** by packaging the server i
 ### 1) Run the Server (Docker)
 
 ```bash
-docker pull moelgazar77/rpc-chat-server:latest
-docker run --rm -p 1234:1234 moelgazar77/rpc-chat-server:latest
+docker pull poorclown/rpc-chat-server:v1
+docker run --rm -p 1234:1234 poorclown/rpc-chat-server:v1
 ```
 
 The server listens on:
@@ -78,7 +78,7 @@ CMD ["./server"]
 
 ### 1) Build the image
 ```bash
-docker build -t moelgazar77/rpc-chat-server:latest .
+docker build -t poorclown/rpc-chat-server:v1 .
 ```
 
 ### 2) Login to Docker Hub  
@@ -89,10 +89,7 @@ docker login
 
 ### 3) Push the image
 ```bash
-docker push moelgazar77/rpc-chat-server:latest
+docker push poorclown/rpc-chat-server:v1
 ```
 
 ---
-
-
-
